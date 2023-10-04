@@ -21,14 +21,17 @@ hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt 
 You can add options to executable code like this
 
 ```{r}
-#graph of relationship between Trump voters and hate crimes
+#First Graph: relationship between Trump voters and hate crimes
 library(ggplot2)
+library(ggthemes)
 
 hate_crimes %>% 
 ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc)) + 
   geom_jitter() + 
   geom_smooth(method = "lm", se = FALSE) +
-  labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Less Common in Areas with High Proportions of Trump Voters", subtitle = "Polarized Areas See Higher Rates of Hate Crimes", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") 
+  labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Common in Polarized States", subtitle = "Association between Hate Crimes and Trump Voters", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") + 
+  theme_economist_white() + 
+  scale_x_continuous(labels = scales::percent)
 
 
   
@@ -63,4 +66,6 @@ hate_crimes %>%
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Narrative Interpretations:
+
+"Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
