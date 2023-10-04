@@ -1,0 +1,30 @@
+---
+title: "Assignment4_v2"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#load data
+library(tidyverse)
+hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
+```
+
+You can add options to executable code like this
+
+```{r}
+#graph of relationship between Trump voters and hate crimes
+library(ggplot2)
+ggplot(data = hate_crimes) + 
+  geom_jitter(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc, color = "red", size = 5))
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
