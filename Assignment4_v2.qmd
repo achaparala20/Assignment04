@@ -113,13 +113,23 @@ hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
 
 hate_crimes %>% 
 ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
-  geom_histogram(binwidth = .5, fill = "darkgreen", color = "gray") + 
+  geom_histogram(binwidth = .5, fill = "darkgreen", color = "darkgray") + 
   labs(
     y = "Count of States",
     x = "Average Hate Crimes Per 100k",
     caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.",
     title = "Most States Have Hate Crimes Rates of .5 to 3 per 100k"
-    )
+    ) +
+   theme(
+        axis.text=element_text (size=4),
+        plot.caption = element_text(size = 6, face = "italic"),
+        axis.line.y = element_line(color = "transparent"),
+        axis.ticks.y = element_blank(),
+        plot.title=element_text(size=10, face = "bold", hjust = .5),
+        plot.subtitle= element_text(size = 8,hjust = .5),
+        axis.title=element_text(size=7)
+   )
+
 
 
 
