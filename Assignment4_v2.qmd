@@ -1,6 +1,6 @@
 ---
 title: "Assignment4_v2"
-format: html
+format: pdf
 editor: visual
 ---
 
@@ -31,9 +31,12 @@ You can add options to executable code like this
 #graph of relationship between Trump voters and hate crimes
 library(ggplot2)
 
-hate_crimes %>% 
-ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc)) + 
-  geom_jitter(color = "blue", shape = "square") + 
+hate_crimes_diverse <- hate_crimes %>%
+  mutate(diverse = if_else(share_non_white>0.4, 1, 0))
+
+hate_crimes_diverse %>%
+ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc, scale_shape_binned = diverse)) + 
+  geom_jitter() + 
   geom_smooth(method = "lm", se = FALSE) +
   labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Less Common in Areas with High Proportions of Trump Voters", subtitle = "Polarized Areas See Higher Rates of Hate Crimes", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") +
     theme(
@@ -55,7 +58,7 @@ library(ggplot2)
 
   
 hate_crimes %>%
-  ggplot(mapping = aes(x= share_non_white, y = gini_index, transparency = 0.5)) +
+  ggplot(mapping = aes(x = share_non_white, y = gini_index, transparency = 0.5, color = state)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   theme_light() +
@@ -78,9 +81,9 @@ hate_crimes %>%
 ```
 
 ```{r}
-hate_crimes %>%
+hate_crimes_diverse %>%
   na.omit(hate_crimes_per_100k_splc) %>%
-  ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi))+
+  ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi, stroke = diverse))+
   geom_point(color="purple", size=.5, alpha=1) + 
   geom_segment(aes(x=state, xend=state, y=0, yend=avg_hatecrimes_per_100k_fbi)) +
   scale_y_continuous(expand = expansion(mult = c(0,0)), limits = c(0, 12)) +
@@ -106,7 +109,6 @@ hate_crimes %>%
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
-
 
 ```{r}
 library(tidyverse)
@@ -139,4 +141,3 @@ ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
 ```
 
 "Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
-
