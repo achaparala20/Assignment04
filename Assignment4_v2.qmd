@@ -28,14 +28,14 @@ hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt 
 You can add options to executable code like this
 
 ```{r}
-#graph of relationship between Trump voters and hate crimes
+#Graph of relationship between Trump voters and hate crimes
 library(ggplot2)
 
 hate_crimes_diverse <- hate_crimes %>%
   mutate(diverse = if_else(share_non_white>0.4, 1, 0))
 
 hate_crimes_diverse %>%
-ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc, scale_shape_binned = diverse)) + 
+ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc, color = diverse)) + 
   geom_jitter() + 
   geom_smooth(method = "lm", se = FALSE) +
   labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Less Common in Areas with High Proportions of Trump Voters", subtitle = "Polarized Areas See Higher Rates of Hate Crimes", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") +
@@ -55,7 +55,7 @@ library(tidyverse)
 library(readr)
 library(ggplot2)
 
-
+#Graph of relationship between Inequality and Racial Diversity
   
 hate_crimes %>%
   ggplot(mapping = aes(x = share_non_white, y = gini_index, transparency = 0.5, color = state)) +
@@ -81,6 +81,8 @@ hate_crimes %>%
 ```
 
 ```{r}
+#Lollipop Graph of Average Hate Crimes per 100K
+
 hate_crimes_diverse %>%
   na.omit(hate_crimes_per_100k_splc) %>%
   ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi, stroke = diverse))+
@@ -111,6 +113,8 @@ hate_crimes_diverse %>%
 The `echo: false` option disables the printing of code (only output is displayed).
 
 ```{r}
+#Histogram of Average Hate Crimes per 100K
+
 library(tidyverse)
 library(readr)
 library(ggplot2)
