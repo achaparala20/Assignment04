@@ -29,11 +29,6 @@ ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc
   geom_jitter() + 
   geom_smooth(method = "lm", se = FALSE) +
   labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Less Common in Areas with High Proportions of Trump Voters", subtitle = "Polarized Areas See Higher Rates of Hate Crimes", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") 
-
-
-  
-
- 
 ```
 
 ```{r}
