@@ -1,5 +1,6 @@
 ---
 title: "Assignment4_v2"
+authors: 'Alekhya Chaparala, Juliet Hayes, Kieran Connolly'
 format: pdf
 editor: visual
 ---
