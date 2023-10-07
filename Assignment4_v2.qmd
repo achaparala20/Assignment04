@@ -99,7 +99,7 @@ hate_crimes %>%
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
-<<<<<<< HEAD
+
 
 ```{r}
 library(tidyverse)
@@ -132,5 +132,4 @@ ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
 
 
 ```
-=======
->>>>>>> a01ac88e92b40a77ea65922e7fae2cc7f4e59f47
+
