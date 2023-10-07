@@ -1,5 +1,5 @@
 ---
-title: "Assignment4_v2"
+title: "Assignment 4"
 format: html
 editor: visual
 execute: 
@@ -17,23 +17,22 @@ This analysis looks at determinants of hate crime rates in the United States, me
 
 library(tidyverse)
 library(knitr) 
-
 suppressWarnings({ 
  # Code that generates warning messages 
 }) 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 
+#read data from GitHub
+hate_crimes <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/hate-crimes/hate_crimes.csv")
+
 #alekhya
-hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
+#hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
 
 #kieran
 #hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
 
-#For some reason, running the CSV from the website only works with the second two graphics, not the first two.
-#hate_crimes <- read_csv('https://github.com/fivethirtyeight/data/blob/master/hate-crimes/hate_crimes.csv')
-
 #juliet
-#hate_crimes <- read_csv("/Users/Juj/Desktop/hate_crimes.csv")  
+#hate_crimes <- read_csv("/Users/Juj/Desktop/hate_crimes.csv") 
 ```
 
 **Hate Crimes Are Common in Areas with High Proportions of Trump Voters**
