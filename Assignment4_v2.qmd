@@ -4,22 +4,19 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## Examining Hate Crime Rates in the United States 
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+This analysis looks at determinants of hate crime rates in the United States, measured by number of hate crimes per 100,000 across the 50 states plus the District of Columbia. We display various summary statistics for these states and graph hate crime rates against various factors that could help
 
 ```{r}
 #load data
 library(tidyverse)
 #alekhya
-hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
+#hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
 
 #juliet
-#hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
+hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
+
 
 #kieran
 #hate_crimes <- read_csv("/Users/Juj/Desktop/hate_crimes.csv") 
@@ -105,8 +102,11 @@ hate_crimes %>%
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Lollipop: helpful reference for each state; can clearly ...
 
+Describe what the purple dot means
+
+A histogram of hate crime rates by states shows a clear clustering of states around an average of about 2 hate crimes per 100,000 residents. The data is very roughly bell-shaped, with one clear outlier (the District of Columbia, which has many features that distinguish it from other states). This arrangement clearly shows that while the clustering effect is strong, few states have a hate crimes rate of more than 3 per 100,000 residents.
 
 ```{r}
 library(tidyverse)
@@ -132,11 +132,8 @@ ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
         axis.title=element_text(size=7)
    )
 
-#Comment
-
-
-
 ```
 
 "Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
 
+**Takeaways:**
