@@ -81,6 +81,8 @@ hate_crimes %>%
 
 ```
 
+"Racialized Income Inequality in the States": This graph demonstrates the positive correlation between the share of people of color in a state's population and income inequality as measured by the gini coefficient. The racial wealth gap in the country, which is caused by the legacy of slavery as well as historical and ongoing discrimination in employment, housing, and education, is driving the dynamic that we see in this graph. Because this dataset was created to think through questions of income inequality, we thought it was important to include a graph that would capture the fact that income inequality is a racialized phenomenon in this country, which the initial authors did not explore in their analysis.
+
 ```{r}
 #Lollipop Graph of Average Hate Crimes per 100K
 
