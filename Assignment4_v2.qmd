@@ -51,6 +51,8 @@ ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc
   scale_x_continuous(labels = scales::percent)
 ```
 
+"Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
+
 ```{r}
 library(tidyverse)
 library(readr)
@@ -146,5 +148,3 @@ ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
 
 
 ```
-
-"Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
