@@ -2,35 +2,54 @@
 title: "Assignment4_v2"
 format: html
 editor: visual
+execute: 
+  warning: false
+  echo: false
 ---
 
-## Examining Hate Crime Rates in the United States 
+Alekhya Chaparala, Juliet Hayes, and Kieran Connolly
+
+## Examining Hate Crime Rates in the United States
 
 This analysis looks at determinants of hate crime rates in the United States, measured by number of hate crimes per 100,000 across the 50 states plus the District of Columbia. We display various summary statistics for these states and graph hate crime rates against various factors that could help
 
-```{r}
-#load data
+```{r load data}
+
 library(tidyverse)
+library(knitr) 
+
+suppressWarnings({ 
+ # Code that generates warning messages 
+}) 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+
 #alekhya
-#hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
-
-#juliet
-hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
-
+hate_crimes <- read_csv(file = "/Users/alekhya/Desktop/03_ARC School/02 McCourt Year 2/Data Science/Assignment04/data/hate_crimes.csv")
 
 #kieran
-#hate_crimes <- read_csv("/Users/Juj/Desktop/hate_crimes.csv") 
+#hate_crimes <- read_csv(file = "C:/Users/kjcst/Downloads/hate_crimes.csv")
+
+#For some reason, running the CSV from the website only works with the second two graphics, not the first two.
+#hate_crimes <- read_csv('https://github.com/fivethirtyeight/data/blob/master/hate-crimes/hate_crimes.csv')
+
+#juliet
+#hate_crimes <- read_csv("/Users/Juj/Desktop/hate_crimes.csv")  
 ```
 
-You can add options to executable code like this
+**Hate Crimes Are Common in Areas with High Proportions of Trump Voters**
 
-```{r}
-#graph of relationship between Trump voters and hate crimes
+This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
+
+```{r Graph 1}
+
 library(ggplot2)
 
-hate_crimes %>% 
-ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc)) + 
-  geom_jitter(color = "blue", shape = "square") + 
+hate_crimes_diverse <- hate_crimes %>%
+  mutate(diverse = if_else(share_non_white>0.4, 1, 0))
+
+hate_crimes_diverse %>%
+ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc, color = diverse)) + 
+  geom_jitter() + 
   geom_smooth(method = "lm", se = FALSE) +
   labs(y = "Hate Crimes per 100k Population", x = "Share of Voters who Voted Trump", title = "Hate Crimes are Less Common in Areas with High Proportions of Trump Voters", subtitle = "Polarized Areas See Higher Rates of Hate Crimes", caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.") +
     theme(
@@ -44,15 +63,18 @@ ggplot(mapping = aes(x = share_voters_voted_trump, y = hate_crimes_per_100k_splc
   scale_x_continuous(labels = scales::percent)
 ```
 
-```{r}
+**Racialized Income Inequality by State**
+
+This graph demonstrates the positive correlation between the share of people of color in a state's population and income inequality as measured by the gini coefficient. The racial wealth gap in the country, which is caused by the legacy of slavery as well as historical and ongoing discrimination in employment, housing, and education, is driving the dynamic that we see in this graph. Because this dataset was created to think through questions of income inequality, we thought it was important to include a graph that would capture the fact that income inequality is a racialized phenomenon in this country, which the initial authors did not explore in their analysis.
+
+```{r Graph 2}
+
 library(tidyverse)
 library(readr)
 library(ggplot2)
-
-
   
 hate_crimes %>%
-  ggplot(mapping = aes(x= share_non_white, y = gini_index, transparency = 0.5)) +
+  ggplot(mapping = aes(x = share_non_white, y = gini_index, transparency = 0.5, color = state)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   theme_light() +
@@ -60,7 +82,7 @@ hate_crimes %>%
     y = "State's Gini Index",
     x = "State's Share of Non-White Population",
     caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.",
-    title = "Racialized Income Inequality in the States",
+    title = "Racialized Income Inequality By State",
     subtitle = "The Whitest States Tend to Have The Lowest Inequality Levels")+ 
   theme(
         axis.text = element_text(size=8, color = "blue",
@@ -74,10 +96,15 @@ hate_crimes %>%
 
 ```
 
-```{r}
-hate_crimes %>%
+**Hate Crimes Rates in Each State**
+
+This graphic provides a helpful reference for understanding the rate of hate crime per 100,000 residents in each state. This graphic gives clear side-by-side comparisons of all states, which can be useful for contextualizing the values for the various states in this study as well as the overall hate crime incidence. There is substantial difference from one state with another---some states with higher incidences of hate crimes have rates that are 4 to 10 times larger than those with the lowest rates. The graphic also includes a purple dot labeling states with diverse populations, characterized as those with at least 40% non-white residents.
+
+```{r Graph 3}
+
+hate_crimes_diverse %>%
   na.omit(hate_crimes_per_100k_splc) %>%
-  ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi))+
+  ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi, stroke = diverse))+
   geom_point(color="purple", size=.5, alpha=1) + 
   geom_segment(aes(x=state, xend=state, y=0, yend=avg_hatecrimes_per_100k_fbi)) +
   scale_y_continuous(expand = expansion(mult = c(0,0)), limits = c(0, 12)) +
@@ -85,7 +112,7 @@ hate_crimes %>%
   coord_flip() +
     labs(x = NULL, 
          y = "Average Hate Crimes per 100,000",
-         title = "Hate Crimes in Each State",
+         title = "Hate Crimes Rates in Each State",
          subtitle = "According to FBI Crime Statistics, 2010-2015",
          caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.",
          ) +
@@ -102,13 +129,12 @@ hate_crimes %>%
 
 ```
 
-Lollipop: helpful reference for each state; can clearly ...
-
-Describe what the purple dot means
+**Most States Have Hate Crimes Rates of .5 to 3 per 100k**
 
 A histogram of hate crime rates by states shows a clear clustering of states around an average of about 2 hate crimes per 100,000 residents. The data is very roughly bell-shaped, with one clear outlier (the District of Columbia, which has many features that distinguish it from other states). This arrangement clearly shows that while the clustering effect is strong, few states have a hate crimes rate of more than 3 per 100,000 residents.
 
-```{r}
+```{r Graph 4}
+
 library(tidyverse)
 library(readr)
 library(ggplot2)
@@ -134,6 +160,6 @@ ggplot(mapping = aes(x = avg_hatecrimes_per_100k_fbi))+
 
 ```
 
-"Hate Crimes Are Common in Polarized States": This graph shows the relationship between the proportion of Trump voters in a given state and the number of hate crimes per 100K people committed in that state. We might hypothesize that there would be a higher rate of hate crimes in states dominated by Trump voters, but in fact this graph illustrates that hate crimes are more prevalent in states where 40%-50% of voters support Trump. In other words, hate crimes are more prevalent in states that have a greater degree of political polarization, compared to states with a higher percentage of Trump voters. We also see an outlier in the District of Columbia, which has a very low percent of Trump voters (4%) but a high rate of hate crimes (1.5 per 100K). This is likely due to the fact that DC has a much smaller population size than most states, but a relatively high number of hate crimes compared to other small states.
+**Discussion:**
 
-**Takeaways:**
+These graphics can help to characterize the overall form of hate crime rates in the United States, and some of dynamics that drive such rates. Hate crime rates can vary quite widely from one state to another; even among states with large non-white populations, there is considerable variation in hate crime rates. Hate crimes are also more common in politically polarized states, with states that have very high proportions of Trump voters having relatively low hate crime rates. And finally, income inequality is higher in states with more diverse populations, showing a clear legacy of the racialized phenomenon of poverty and inequality.
