@@ -53,21 +53,52 @@ hate_crimes <- read_csv("https://github.com/fivethirtyeight/data/blob/master/hat
   
 hate_crimes %>%
   ggplot(mapping = aes(x= share_non_white, y = gini_index)) +
-  geom_point()+
-  geom_smooth(method = "lm", se = FALSE)+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
   theme_light() +
   labs(
     y = "State's Gini Index",
     x = "State's Share of Non-White Population",
     caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.",
-    title = "Whiter States Tend to Have Lower Levels of Income Inequality")+ 
+    title = "Racialized Income Inequality in the States",
+    subtitle = "The Whitest States Tend to Have The Lowest Inequality Levels")+ 
   theme(
-        axis.text=element_text(size=8, color = "blue",
+        axis.text = element_text(size=8, color = "blue",
                                hjust = 0.5), 
-        plot.title=element_text(size=10, face = "bold"),
-        axis.title=element_text(size=9),
+        plot.title = element_text(size=10, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(size=8, hjust = 0.5),
+        axis.title = element_text(size=9),
         plot.caption = element_text(size = 6, face = "italic")
       )
+
+```
+
+
+```{r}
+hate_crimes %>%
+  na.omit(hate_crimes_per_100k_splc) %>%
+  ggplot(aes(x= state,y= avg_hatecrimes_per_100k_fbi))+
+  geom_point(color="purple", size=.5, alpha=1) + 
+  geom_segment(aes(x=state, xend=state, y=0, yend=avg_hatecrimes_per_100k_fbi)) +
+  scale_y_continuous(expand = expansion(mult = c(0,0)), limits = c(0, 12)) +
+  theme_classic() +
+  coord_flip() +
+    labs(x = NULL, 
+         y = "Average Hate Crimes per 100,000",
+         title = "Hate Crimes in Each State",
+         subtitle = "According to FBI Crime Statistics, 2010-2015",
+         caption ="Majumder, M. 2017. 'Higher Rates Of Hate Crimes Are Tied To Income Inequality'. FiveThirtyEight.",
+         ) +
+  theme(
+        axis.text=element_text (size=4),
+        plot.caption = element_text(size = 6, face = "italic"),
+        axis.line.y = element_line(color = "transparent"),
+        axis.ticks.y = element_blank(),
+        plot.title=element_text(size=10, face = "bold", hjust = .5),
+        plot.subtitle= element_text(size = 8,hjust = .5),
+        axis.title=element_text(size=7),
+        
+      ) 
 
 ```
 
