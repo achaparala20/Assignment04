@@ -2,6 +2,7 @@
 title: "Assignment 4"
 format: html
 editor: visual
+self-contained: true
 execute: 
   warning: false
   echo: false
