@@ -12,7 +12,7 @@ Alekhya Chaparala, Juliet Hayes, and Kieran Connolly
 
 ## Examining Hate Crime Rates in the United States
 
-This analysis looks at determinants of hate crime rates in the United States, measured by number of hate crimes per 100,000 across the 50 states plus the District of Columbia. We display various summary statistics for these states and graph hate crime rates against various factors that could help
+This analysis looks at determinants of hate crime rates in the United States, measured by number of hate crimes per 100,000 across the 50 states plus the District of Columbia. We display various summary statistics for these states and graph hate crime rates against various factors that could help explain the prevalence of hate crimes.
 
 ```{r load data}
 
